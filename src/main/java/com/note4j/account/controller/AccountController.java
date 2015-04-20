@@ -6,10 +6,16 @@ import com.note4j.account.service.AccountService;
 import com.note4j.util.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/account.do")
@@ -26,19 +32,6 @@ public class AccountController {
         return modelAndView;
     }
 
-    @RequestMapping(params = "method=update", method = RequestMethod.POST)
-    public ModelAndView updateAccountInfo(@ModelAttribute Account accountInfo, int id) {
-        ModelAndView modelAndView = new ModelAndView("accountInfo");
-
-        ErrDTO<String> result = accountService.updateAccountInfo(accountInfo);
-        String message =  result.getErrcode()+" : "+result.getObj();
-        modelAndView.addObject("message", message);
-        Account account = accountService.getUserInfoById(id);
-        modelAndView.addObject("account", account);
-        return modelAndView;
-    }
-
-
     @RequestMapping(params = "method=register", method = RequestMethod.GET)
     public ModelAndView registerPage() {
         ModelAndView modelAndView = new ModelAndView("register");
@@ -49,23 +42,46 @@ public class AccountController {
         return modelAndView;
     }
 
-
     @RequestMapping(params = "method=register", method = RequestMethod.POST)
-    public ModelAndView addAccount(@ModelAttribute Account accountInfo) {
+    public ModelAndView addAccount(@ModelAttribute @Valid Account accountInfo, BindingResult bindingResult) {
         ModelAndView modelAndView;
+        String message = "";
+        if (bindingResult.hasErrors()) {
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                message += error.getCode()+error.getDefaultMessage();
+            }
+//            message = "Error: " + bindingResult.getAllErrors().get(0).getDefaultMessage();
+            modelAndView = new ModelAndView("register");
+            modelAndView.addObject("message", message);
+            modelAndView.addObject("account", accountInfo);
+            return modelAndView;
+        }
         ErrDTO<String> result = accountService.register(accountInfo);
-        String message = null;
-        if (result.getErrcode() == ErrorCode.REGISTER_SUCCESS) {
+        if (result.getErrcode() == ErrorCode.REGISTER_SUCCESS && (!bindingResult.hasErrors())) {
             modelAndView = new ModelAndView("accountInfo");
             message = result.getObj();
             modelAndView.addObject("message", message);
             modelAndView.addObject("account", accountInfo);
         } else {
             message = "Error: " + result.getErrcode();
+            bindingResult.getAllErrors();
             modelAndView = new ModelAndView("register");
             modelAndView.addObject("message", message);
             modelAndView.addObject("account", accountInfo);
         }
+        return modelAndView;
+    }
+
+
+    @RequestMapping(params = "method=update", method = RequestMethod.POST)
+    public ModelAndView updateAccountInfo(@ModelAttribute Account accountInfo, int id) {
+        ModelAndView modelAndView = new ModelAndView("accountInfo");
+
+        ErrDTO<String> result = accountService.updateAccountInfo(accountInfo);
+        String message = result.getErrcode() + " : " + result.getObj();
+        modelAndView.addObject("message", message);
+        Account account = accountService.getUserInfoById(id);
+        modelAndView.addObject("account", account);
         return modelAndView;
     }
 
