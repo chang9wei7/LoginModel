@@ -1,4 +1,4 @@
-LoginModel
+LoginModel of Account Manage System
 
 This is part of account manage system. This system is developed by java with spring and hibernate.You can get the source code for further development with the function you need.
 
