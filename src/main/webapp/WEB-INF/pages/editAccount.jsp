@@ -9,41 +9,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Note4j &#8250; Account Info</title>
+    <title>Note4j &#8250; Update Account</title>
 </head>
 <body>
-<h1>Update</h1>
+<h2>Update Account</h2>
+
 <p>${message}</p>
-<form:form method="POST" commandName="account"
-           action="${pageContext.request.contextPath}/account.do?method=update&id=${account.id}">
+<form:form method="POST" commandName="account" enctype="multipart/form-data"
+           action="${pageContext.request.contextPath}/account.do?method=update&id=${account.id}&image">
     <table>
         <tbody>
         <tr>
             <td><form:label path="user_name">Name:</form:label></td>
             <td><form:input path="user_name" size="30"/><br/>
-                <form:errors path="user_name" cssClass="error"/>
+                <form:errors path="user_name" cssClass="error" cssStyle="color: red;"/>
             </td>
         </tr>
         <tr>
             <td><form:label path="phone">Phone:</form:label></td>
             <td><form:input path="phone" size="30" maxlength="15"/><br/>
-                <form:errors path="phone" cssClass="error"/>
+                <form:errors path="phone" cssClass="error" cssStyle="color: red;"/>
             </td>
         </tr>
         <tr>
             <td><form:label path="address">Address:</form:label></td>
             <td><form:input path="address" size="30" maxlength="30"/><br/>
-                <form:errors path="address" cssClass="error"/>
+                <form:errors path="address" cssClass="error" cssStyle="color: red;"/>
             </td>
         </tr>
         <tr>
             <td><form:label path="mail">E-mail:</form:label></td>
             <td><form:input path="mail" size="30" maxlength="30"/><br/>
-                <form:errors path="mail" cssClass="error"/>
+                <form:errors path="mail" cssClass="error" cssStyle="color: red;"/>
             </td>
         </tr>
         <tr>
-            <td><input type="submit" value="Update" /></td>
+            <td><label>Profile image:</label></td>
+            <td>
+                <input name="image" type="file"/><br/>
+                <form:errors commandName="image" path="" cssClass="error" cssStyle="color: red;"/>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Update"/></td>
             <td></td>
         </tr>
         </tbody>

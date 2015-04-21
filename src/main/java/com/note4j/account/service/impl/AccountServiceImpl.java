@@ -1,6 +1,7 @@
 package com.note4j.account.service.impl;
 
 import com.note4j.account.model.ErrDTO;
+import com.note4j.exception.ImageUploadException;
 import com.note4j.util.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ErrDTO<String> updateAccountInfo(Account account) {
-        ErrDTO<String> errDTO ;
+        ErrDTO<String> errDTO;
         String modName = account.getUser_name();
         String name = accountDao.get(account.getId()).getUser_name();
         int code = -1;
@@ -82,5 +83,7 @@ public class AccountServiceImpl implements AccountService {
         }
         return index;
     }
+
+
 
 }
