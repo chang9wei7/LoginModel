@@ -9,15 +9,17 @@ public class ErrorCode {
     public static final int USERNAME_NOT_NULL = 1101;
     //用户名已存在
     public static final int USERNAME_EXISTS = 1102;
+    //密码不能为空
+    public static final int PASSWD_NOT_NULL = 1201;
 
     //电话不能为空
-    public static final int PHONE_NOT_NULL = 1201;
+    public static final int PHONE_NOT_NULL = 1301;
     //电话格式不正确
-    public static final int PHONE_FORMAT_ERR = 1202;
+    public static final int PHONE_FORMAT_ERR = 1302;
     //地址不能为空
-    public static final int ADDRESS_NOT_NULL = 1301;
+    public static final int ADDRESS_NOT_NULL = 1401;
     //更新成功
     public static final int UPDATE_SUCCESS = 2000;
-    //更新成功
+    //更新失败
     public static final int UPDATE_FAILURE = 2001;
 }

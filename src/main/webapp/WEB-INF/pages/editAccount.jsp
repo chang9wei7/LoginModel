@@ -19,19 +19,31 @@
     <table>
         <tbody>
         <tr>
-            <td>Name:</td>
-            <td><form:input path="user_name"/></td>
+            <td><form:label path="user_name">Name:</form:label></td>
+            <td><form:input path="user_name" size="30"/><br/>
+                <form:errors path="user_name" cssClass="error"/>
+            </td>
         </tr>
         <tr>
-            <td>Address:</td>
-            <td><form:input  path="address" /></td>
+            <td><form:label path="phone">Phone:</form:label></td>
+            <td><form:input path="phone" size="30" maxlength="15"/><br/>
+                <form:errors path="phone" cssClass="error"/>
+            </td>
         </tr>
         <tr>
-            <td>Phone:</td>
-            <td><form:input  path="phone" /></td>
+            <td><form:label path="address">Address:</form:label></td>
+            <td><form:input path="address" size="30" maxlength="30"/><br/>
+                <form:errors path="address" cssClass="error"/>
+            </td>
         </tr>
         <tr>
-            <td><input type="submit" value="更新" /></td>
+            <td><form:label path="mail">E-mail:</form:label></td>
+            <td><form:input path="mail" size="30" maxlength="30"/><br/>
+                <form:errors path="mail" cssClass="error"/>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Update" /></td>
             <td></td>
         </tr>
         </tbody>

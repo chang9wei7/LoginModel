@@ -19,17 +19,19 @@
     <tr>
         <th width="10%">id</th>
         <th width="15%">name</th>
-        <th width="30%">address</th>
         <th width="10%">phone</th>
-        <th width="10%">操作</th>
+        <th width="30%">address</th>
+        <th width="10%">mail</th>
+        <th width="10%">Edit</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td>${account.id}</td>
         <td>${account.user_name}</td>
-        <td>${account.address}</td>
         <td>${account.phone}</td>
+        <td>${account.address}</td>
+        <td>${account.mail}</td>
         <td><a
                 href="${pageContext.request.contextPath}/account.do?method=edit&id=${account.id}">Edit</a><br/>
         </td>

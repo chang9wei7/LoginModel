@@ -16,26 +16,29 @@ public class Account {
     @Id
     @GeneratedValue
     private Integer id;
-    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 character long.")
-    @NotNull(message = "username can't be null.")
+    @Size(min = 6, max = 20, message = "Username must be between 6 and 20 character long.")
+    @NotNull(message = "Username can't be null.")
     private String user_name;
 
-    @Size(min = 7, max = 11, message = "Phone number must be 7 and 11 digitial long")
-    @Pattern(regexp = "^[0-9]+$", message = "Phone number must be digital.")
+//    @Size(min = 7, max = 11, message = "Phone number must be 7 and 11 digitial long")
+    @Pattern(regexp = "^[\\d]{0,3}-?[\\d]{7,13}$", message = "Phone number must be digital and at least 7 long.")
     private String phone;
 
     @Size(min = 3, max = 30, message = "The address must be at least 10 words.")
     private String address;
+
+    @NotNull(message = "E-mail can't be null")
     @Pattern(regexp = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}", message = "Inviald email address.")
     private String mail;
-    @NotNull(message = "Please input password.")
+
+
     @Size(min = 6, max = 20, message = "The password mst be at least 6 and at most character long.")
+//    @NotNull(message = "Please input password.")
     private String password;
 
     public Account() {
 
     }
-
 
     public Account(String user_name, String address, String phone,
                    String password) {

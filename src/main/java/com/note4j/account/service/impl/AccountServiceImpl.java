@@ -30,17 +30,13 @@ public class AccountServiceImpl implements AccountService {
         String userName = account.getUser_name();
         String phone = account.getPhone();
         String address = account.getAddress();
-        if (userName == null || userName.length() == 0) {
-            code = ErrorCode.USERNAME_NOT_NULL;
-        } else if (accountDao.get(userName) != null) {
+        String password = account.getPassword();
+        if (accountDao.get(userName) != null) {
             code = ErrorCode.USERNAME_EXISTS;
             message = "usename already exist.";
-        } else if (phone == null || phone.length() == 0) {
-            code = ErrorCode.PHONE_NOT_NULL;
-        } else if (!phone.matches("([\\d]+)")) {
-            code = ErrorCode.PHONE_FORMAT_ERR;
-        } else if (address == null || address.length() == 0) {
-            code = ErrorCode.ADDRESS_NOT_NULL;
+        } else if (password != null && password.length() != 0) {
+            code = ErrorCode.PASSWD_NOT_NULL;
+            message = "password can't be null.";
         } else {
             message = "register success!";
             accountDao.add(account);
@@ -51,18 +47,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ErrDTO<String> updateAccountInfo(Account account) {
-        ErrDTO<String> errDTO = new ErrDTO<String>();
-        String phone = account.getPhone();
+        ErrDTO<String> errDTO ;
         String modName = account.getUser_name();
         String name = accountDao.get(account.getId()).getUser_name();
         int code = -1;
         String message = "";
-        if (phone != null && phone.length() != 0) {
-            if (!phone.matches("([\\d]+)")) {
-                code = ErrorCode.PHONE_FORMAT_ERR;
-                message = "Phone Number Format error.";
-            }
-        }
+
         if (modName != null || modName.length() != 0) {
             if (!modName.equals(name) && accountDao.get(modName) != null) {
                 code = ErrorCode.USERNAME_EXISTS;

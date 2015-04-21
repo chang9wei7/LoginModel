@@ -43,26 +43,20 @@ public class AccountController {
     @RequestMapping(params = "method=register", method = RequestMethod.POST)
     public ModelAndView addAccount(@ModelAttribute @Valid Account accountInfo, BindingResult bindingResult) {
         ModelAndView modelAndView;
-        String message = "";
+        String message;
         if (bindingResult.hasErrors()) {
-            for (ObjectError error : bindingResult.getAllErrors()) {
-                message += error.getCodes()+error.getDefaultMessage();
-            }
-//            message = "Error: " + bindingResult.getAllErrors().get(0).getDefaultMessage();
             modelAndView = new ModelAndView("register");
-            modelAndView.addObject("message", message);
             modelAndView.addObject("account", accountInfo);
             return modelAndView;
         }
         ErrDTO<String> result = accountService.register(accountInfo);
-        if (result.getErrcode() == ErrorCode.REGISTER_SUCCESS && (!bindingResult.hasErrors())) {
+        if (result.getErrcode() == ErrorCode.REGISTER_SUCCESS) {
             modelAndView = new ModelAndView("accountInfo");
             message = result.getObj();
             modelAndView.addObject("message", message);
             modelAndView.addObject("account", accountInfo);
         } else {
             message = "Error: " + result.getErrcode();
-            bindingResult.getAllErrors();
             modelAndView = new ModelAndView("register");
             modelAndView.addObject("message", message);
             modelAndView.addObject("account", accountInfo);
@@ -70,16 +64,28 @@ public class AccountController {
         return modelAndView;
     }
 
-
     @RequestMapping(params = "method=update", method = RequestMethod.POST)
-    public ModelAndView updateAccountInfo(@ModelAttribute Account accountInfo, int id) {
-        ModelAndView modelAndView = new ModelAndView("accountInfo");
-
+    public ModelAndView updateAccountInfo(@ModelAttribute @Valid Account accountInfo, BindingResult bindingResult, int id) {
+        ModelAndView modelAndView;
+        String message;
+        if (bindingResult.hasErrors()) {
+            modelAndView = new ModelAndView("editAccount");
+            modelAndView.addObject("account", accountInfo);
+            return modelAndView;
+        }
         ErrDTO<String> result = accountService.updateAccountInfo(accountInfo);
-        String message = result.getErrcode() + " : " + result.getObj();
-        modelAndView.addObject("message", message);
-        Account account = accountService.getUserInfoById(id);
-        modelAndView.addObject("account", account);
+        if (result.getErrcode() == ErrorCode.UPDATE_SUCCESS) {
+            modelAndView = new ModelAndView("accountInfo");
+            message = result.getErrcode() + " : " + result.getObj();
+            Account account = accountService.getUserInfoById(id);
+            modelAndView.addObject("message", message);
+            modelAndView.addObject("account", account);
+        } else {
+            message = result.getErrcode() + ":" + result.getObj();
+            modelAndView = new ModelAndView("editAccount");
+            modelAndView.addObject("message", message);
+            modelAndView.addObject("account", accountInfo);
+        }
         return modelAndView;
     }
 

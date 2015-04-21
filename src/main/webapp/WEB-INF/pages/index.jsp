@@ -28,7 +28,7 @@
             <td><form:input type="password" path="password"/></td>
         </tr>
         <tr>
-            <td><input type="submit" value="登陆"/></td>
+            <td><input type="submit" value="Login"/></td>
             <td></td>
         </tr>
         </tbody>
