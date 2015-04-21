@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/account.do")
@@ -48,7 +46,7 @@ public class AccountController {
         String message = "";
         if (bindingResult.hasErrors()) {
             for (ObjectError error : bindingResult.getAllErrors()) {
-                message += error.getCode()+error.getDefaultMessage();
+                message += error.getCodes()+error.getDefaultMessage();
             }
 //            message = "Error: " + bindingResult.getAllErrors().get(0).getDefaultMessage();
             modelAndView = new ModelAndView("register");

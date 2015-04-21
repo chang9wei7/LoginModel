@@ -20,14 +20,14 @@ public class Account {
     @NotNull(message = "username can't be null.")
     private String user_name;
 
-//    @Pattern(regexp = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}", message = "Inviald email address.")
-//    private String mail;
+    @Size(min = 7, max = 11, message = "Phone number must be 7 and 11 digitial long")
+    @Pattern(regexp = "^[0-9]+$", message = "Phone number must be digital.")
+    private String phone;
 
     @Size(min = 3, max = 30, message = "The address must be at least 10 words.")
     private String address;
-    @Size(min = 7, max = 11,message = "Phone number must be 7 and 11 digitial long")
-    @Pattern(regexp = "^[1-9]+$", message = "Phone number must be digital.")
-    private String phone;
+    @Pattern(regexp = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}", message = "Inviald email address.")
+    private String mail;
     @NotNull(message = "Please input password.")
     @Size(min = 6, max = 20, message = "The password mst be at least 6 and at most character long.")
     private String password;
@@ -63,13 +63,13 @@ public class Account {
         this.user_name = user_name;
     }
 
-//    public String getMail() {
-//        return mail;
-//    }
-//
-//    public void setMail(String mail) {
-//        this.mail = mail;
-//    }
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
     public String getAddress() {
         return address;
